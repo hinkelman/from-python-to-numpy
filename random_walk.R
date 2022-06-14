@@ -1,16 +1,17 @@
-# procedural
+# procedural with pre-allocated vector
 random_walk <- function(n = 1000) {
   steps <- vector(mode = "numeric", length = n)
-  for (i in seq_len(n)){
+  steps[1] <- 0
+  for (i in 2:n){
     steps[i] <- sample(c(-1, 1), size = 1)
   }
-  c(0, steps)
+  steps
 }
 
 # naive approach using concatenation
 random_walk_c <- function(n = 1000) {
   steps <- 0
-  for (i in seq_len(n)) {
+  for (i in seq_len(n-1)) {
     steps <- c(steps, sample(c(-1, 1), size = 1))
   }
   steps
@@ -18,7 +19,7 @@ random_walk_c <- function(n = 1000) {
 
 # vectorized
 random_walk_v <- function(n = 1000) {
-  steps <- sample(c(-1, 1), size = n, replace = TRUE)
+  steps <- sample(c(-1, 1), size = n-1, replace = TRUE)
   cumsum(c(0, steps))
 }
 
