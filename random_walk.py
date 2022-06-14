@@ -59,6 +59,14 @@ def find_crossing_2(seq, sub):
     mask = np.all((np.take(seq, check) == sub), axis=-1)
     return candidates[mask]
 
+# Fast and mostly readable; better algorithm wins
+def find_crossing_3(seq, sub):
+    n = len(seq)
+    m = len(sub)
+    candidate = np.arange(n-m)
+    for i in range(m):
+        candidate = candidate[sub[i] == seq[candidate + i]]
+    return candidate
 
 if __name__ == "__main__":
     from tools import timeit
@@ -73,3 +81,4 @@ if __name__ == "__main__":
     W = random_walk_fastest(n=1000)
     timeit("find_crossing_1(list(W), [+1,0,-1])", globals())
     timeit("find_crossing_2(W, [+1,0,-1])", globals())
+    timeit("find_crossing_3(W, [+1,0,-1])", globals())
