@@ -1,31 +1,36 @@
-# procedural with pre-allocated vector
+# procedural
 random_walk <- function(n = 1000) {
-  steps <- vector(mode = "numeric", length = n)
-  steps[1] <- 0
-  for (i in 2:n){
-    steps[i] <- sample(c(-1, 1), size = 1)
+  position <- 0
+  walk <- c()
+  for (i in seq_len(n)) {
+    step <- sample(c(-1, 1), size = 1)
+    position <- position + step
+    walk <- c(walk, position)
   }
-  steps
+  walk
 }
 
-# naive approach using concatenation
-random_walk_c <- function(n = 1000) {
-  steps <- 0
-  for (i in seq_len(n-1)) {
-    steps <- c(steps, sample(c(-1, 1), size = 1))
+# procedural with pre-allocated vector
+random_walk_pre <- function(n = 1000) {
+  position <- 0
+  walk <- vector(mode = "numeric", length = n)
+  for (i in seq_len(n)){
+    step <- sample(c(-1, 1), size = 1)
+    position <- position + step
+    walk[i] <- position
   }
-  steps
+  walk
 }
 
 # vectorized
 random_walk_v <- function(n = 1000) {
-  steps <- sample(c(-1, 1), size = n-1, replace = TRUE)
-  cumsum(c(0, steps))
+  steps <- sample(c(-1, 1), size = n, replace = TRUE)
+  cumsum(steps)
 }
 
 bench::mark(
   random_walk(),
-  random_walk_c(),
+  random_walk_pre(),
   random_walk_v(),
   check = FALSE)
 
