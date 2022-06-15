@@ -1,3 +1,20 @@
+# Scheme
+*.ss~
+*.ss#*
+.#*.ss
+
+*.scm~
+*.scm#*
+.#*.scm
+
+*.sls~
+*.sls#*
+.#*.sls
+
+*.sps~
+*.sps#*
+.#*.sps
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
