@@ -42,14 +42,16 @@
                      (- n 1)))))
 
 (define (find-crossing-lst seq sub)
-  (let loop ([index 0]
-             [lst seq]
-             [results '()])
-    (if (< (length lst) (length sub))
-        (reverse results)
-        (if (equal? (first-n lst (length sub)) sub)
-            (loop (add1 index) (cdr lst) (cons index results))
-            (loop (add1 index) (cdr lst) results)))))
+  (let ([seq-len (length seq)]
+        [sub-len (length sub)])
+    (let loop ([index 0]
+               [lst seq]
+               [results '()])
+      (if (< (- seq-len index) sub-len)
+          (reverse results)
+          (if (equal? (first-n lst sub-len) sub)
+              (loop (add1 index) (cdr lst) (cons index results))
+              (loop (add1 index) (cdr lst) results))))))
 
 (define W-lst (random-walk-lst 1000))
 (time (find-crossing-lst W-lst '(1 0 -1)))
