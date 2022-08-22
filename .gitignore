@@ -15,6 +15,9 @@
 *.sps#*
 .#*.sps
 
+*.akku
+*.akku.sig
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
